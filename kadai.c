@@ -39,13 +39,14 @@ int authentication(void)
     char pw[11];
     FILE *pwfilep;
 
-    printf("認証モード\n=========\n10文字以内のパスワードを入力してください。\nパスワード:");
+    printf("認証モード\n=========\n10文字以内のパスワードを入力してください。\n");
     if ((pwfilep = fopen("password.dat", "r")) == NULL)
     {
         puts("password.dat が存在しません。パスワードを登録してください。");
         exit(1);
     }
     fread(pw, sizeof(pw), 1, pwfilep);
+    printf("パスワード:");
     scanf("%10s", pwinput);
     if (strcmp(pw, pwinput))
         puts("パスワードが一致しません。");
