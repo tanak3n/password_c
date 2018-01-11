@@ -46,6 +46,7 @@ int authentication(void)
         exit(1);
     }
     fread(pw, sizeof(pw), 1, pwfilep);
+    printf("パスワード:");
     scanf("%10s", pwinput);
     if (strcmp(pw, pwinput))
         puts("パスワードが一致しません。");
