@@ -43,7 +43,7 @@ int authentication(void)
     if ((hashfilep = fopen("hash.dat", "rb"))== NULL)
     {
         puts("hash.dat が存在しません。パスワードを登録してください。");
-        exit 1;
+        exit(1);
     }
     fread(&h, sizeof(h), 1, hashfilep);
     printf("10文字以内のパスワードを入力してください。\n保存されたhash:%ld\nパスワード:",h);
