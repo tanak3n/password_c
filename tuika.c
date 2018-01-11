@@ -23,7 +23,11 @@ int registration(void)
     scanf("%10s", pwinput);
     h = hash(pwinput);
     FILE *hashfilep;
-    hashfilep = fopen("hash.dat", "wb");
+     if ((hashfilep = fopen("hash.dat", "wb")) == NULL)
+    {
+        printf("Cannot open the file\n");
+        exit(1);
+    }   
     fwrite(&h, sizeof(h), 1, hashfilep);
     fclose(hashfilep);
     puts("パスワードが登録されました。");
@@ -35,12 +39,11 @@ int authentication(void)
     char pwinput[11];
     long h;
     FILE *hashfilep;
-    hashfilep = fopen("hash.dat", "rb");
     printf("認証モード\n=========\n");
-    if (hashfilep == NULL)
+    if ((hashfilep = fopen("hash.dat", "rb"))== NULL)
     {
         puts("hash.dat が存在しません。パスワードを登録してください。");
-        return 1;
+        exit 1;
     }
     fread(&h, sizeof(h), 1, hashfilep);
     printf("10文字以内のパスワードを入力してください。\n保存されたhash:%ld\nパスワード:",h);

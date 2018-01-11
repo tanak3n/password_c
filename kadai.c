@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int registration(void);
 int authentication(void);
@@ -20,7 +21,12 @@ int registration(void)
     printf("登録モード\n=========\n10文字以内のパスワードを入力してください。\nパスワード:");
     scanf("%10s", pwinput);
     FILE *pwfilep;
-    pwfilep = fopen("password.dat", "wb");
+    if ((pwfilep = fopen("password.dat", "w")) == NULL)
+    {
+        printf("Cannot open the file\n");
+        exit(1);
+    }
+
     fwrite(pwinput, sizeof(pwinput), 1, pwfilep);
     fclose(pwfilep);
     puts("パスワードが登録されました。");
@@ -32,12 +38,12 @@ int authentication(void)
     char pwinput[11];
     char pw[11];
     FILE *pwfilep;
-    pwfilep = fopen("password.dat", "rb");
+
     printf("認証モード\n=========\n10文字以内のパスワードを入力してください。\nパスワード:");
-    if (pwfilep == NULL)
+    if ((pwfilep = fopen("password.dat", "r")) == NULL)
     {
         puts("password.dat が存在しません。パスワードを登録してください。");
-        return 1;
+        exit(1);
     }
     fread(pw, sizeof(pw), 1, pwfilep);
     scanf("%10s", pwinput);
